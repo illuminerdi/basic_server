@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby -w
+
+$: << 'lib'
+require 'basic_server'
+
+stype = ARGV.shift || 'gserver'
+
+case stype
+  when 'gserver' then
+    bgs = BasicGServer.new
+    bgs.audit = true
+    bgs.start
+    bgs.join
+  when 'tcpserver' then
+    puts "Not yet implemented"
+end
