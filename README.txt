@@ -44,17 +44,17 @@ HTTP/1.1 200 OK CRLF Date: Thu, 07 May 2009 01:06:01 GMT CRLF Last-Modified: Mon
 
 == REQUIREMENTS:
 
-* FIX (list of requirements)
+* ruby 1.8.6
 
 == INSTALL:
 
-* FIX (sudo gem install, anything else)
+* Download source, use.
 
 == LICENSE:
 
 (The MIT License)
 
-Copyright (c) 2009 FIX
+Copyright (c) 2009 Joshua Clingenpeel
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
