@@ -1,14 +1,42 @@
 = BasicServer
 
-* FIX (url)
+* http://github.com/illuminerdi
 
 == DESCRIPTION:
 
-FIX (describe your package)
+A simple HTTP server that works under GServer and TCPServer
 
 == FEATURES/PROBLEMS:
 
-* FIX (list of features or problems)
+2 HTTP Servers (really basic HTTP 0.9/GET only):
+
+    * gserver for thread spawning per connection
+    * tcpserver w/ prespawned thread pool
+
+requirements:
+
+    * craft your own request / response objects
+    * servelets of your own design. start with time of the day app.
+    * static files from the filesystem.
+    * html files served plain
+    * html.erb files should render via erb.
+    * no caching, no clever.
+
+Bare minimum HTTP protocol:
+
+    * request:
+
+GET /index.html HTTP/1.0 CRLF CRLF
+
+    * response:
+
+HTTP/1.1 200 OK CRLF Date: Thu, 07 May 2009 01:06:01 GMT CRLF Last-Modified: Mon, 19 Jan 2009 23:02:19 GMT CRLF Content-Length: 3750 CRLF Content-Type: text/html CRLF CRLF …content…
+
+    * other responses are:
+    * 304 redirected
+    * 404 missing
+    * 500 app error
+
 
 == SYNOPSIS:
 
