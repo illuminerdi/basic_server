@@ -40,7 +40,13 @@ HTTP/1.1 200 OK CRLF Date: Thu, 07 May 2009 01:06:01 GMT CRLF Last-Modified: Mon
 
 == SYNOPSIS:
 
-  FIX (code sample of usage)
+  # you can start up either server directly from the command line
+  
+  # For the GServer implementation:
+  $ bin/basic_server gserver
+  
+  # For the TCPServer implementation:
+  $ bin/basic_server tcpserver
 
 == REQUIREMENTS:
 
