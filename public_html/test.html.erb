@@ -1,0 +1,16 @@
+<% phrase = "Ruby is awesome!" %>
+<% show_it = true %>
+<html>
+  <head>
+    <title>ERb fun time</title>
+  </head>
+
+  <body>
+    <h1>Guess what? <%= phrase %></h1>
+    <% if show_it %>
+      <p>
+        You're seeing me because show_it was set to true.
+      </p>
+    <% end %>
+  </body>
+</html>
