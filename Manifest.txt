@@ -5,3 +5,7 @@ Rakefile
 bin/basic_server
 lib/basic_server.rb
 test/test_basic_server.rb
+public_html/404.html
+public_html/500.html
+public_html/index.htm
+public_html/test.html.erb
