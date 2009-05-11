@@ -7,7 +7,7 @@ stype = ARGV.shift || 'gserver'
 
 case stype
   when 'gserver' then
-    bgs = BasicGServer.new
+    bgs = BasicGServer.new(8080)
     bgs.audit = true
     bgs.start
     bgs.join
