@@ -1,8 +1,10 @@
 #!/usr/bin/env ruby -w
 
 require 'gserver'
+require 'socket'
 require 'pathname'
 require 'erb'
+require 'thread'
 
 module BasicServer
   VERSION = '0.0.1'
@@ -101,5 +103,27 @@ class BasicGServer < GServer
   include BasicServer
   def serve(io)
     respond(io)
+  end
+end
+
+class BasicTCPServer
+  include BasicServer
+  
+  def initialize(port=8080, num_threads=50)
+    @port = port
+    @num_threads = num_threads
+  end
+  
+  def start(port=8080)
+    server = TCPServer.new(port)
+    while session = server.accept
+      until Thread.list.size < @num_threads
+        sleep(0.5)
+      end
+      Thread.new(session) do |my_session|
+        respond(my_session)
+        my_session.close
+      end
+    end
   end
 end

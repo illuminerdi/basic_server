@@ -12,5 +12,6 @@ case stype
     bgs.start
     bgs.join
   when 'tcpserver' then
-    puts "Not yet implemented"
+    bts = BasicTCPServer.new(8080)
+    bts.start
 end
