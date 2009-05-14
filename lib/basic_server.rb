@@ -109,20 +109,21 @@ end
 class BasicTCPServer
   include BasicServer
   
-  def initialize(port=8080, num_threads=50)
+  def initialize(port, num_threads=10)
     @port = port
     @num_threads = num_threads
   end
   
-  def start(port=8080)
-    server = TCPServer.new(port)
+  def start
+    server = TCPServer.new(@port)
+    threads = ThreadGroup.new
     while session = server.accept
-      until Thread.list.size < @num_threads
-        sleep(0.5)
-      end
-      Thread.new(session) do |my_session|
-        respond(my_session)
-        my_session.close
+      if threads.list.size <= @num_threads
+        t = Thread.new(session) do |my_session|
+          respond(my_session)
+          my_session.close
+        end
+        threads.add(t)
       end
     end
   end
