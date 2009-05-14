@@ -27,6 +27,10 @@ module BasicServer
     end
     
     def create_header rnum
+      type = case @path.extname
+        when /^(\.htm|\.html|\.erb)/ then 'text/html'
+        else 'text/plain'
+      end
       header = "#{HTTP_VERSION} #{rnum} #{RESPONSES[rnum]}\r\n"
       header += "Date: #{Time.now}\r\n"
       header += "Server: BasicServer\r\n"
@@ -34,7 +38,7 @@ module BasicServer
         header += "Last-Modified: #{@path.mtime}\r\n"
         header += "Content-Length: #{@path.size}\r\n"
       end
-      header += "Content-Type: text/html\r\n\r\n" 
+      header += "Content-Type: #{type}\r\n\r\n" 
     end
     
     def respond

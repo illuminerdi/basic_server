@@ -19,16 +19,24 @@ class TestBasicServer < Test::Unit::TestCase
   def test_ok_header
     header = @request.create_header(200)
     assert_match /HTTP\/0.9 200 OK/, header
+    assert_match /text\/html/, header
+  end
+  
+  def test_ok_servlet_header_with_content_type
+    header = @time.create_header(200)
+    assert_match /text\/plain/, header
   end
   
   def test_not_found_header
     header = @request.create_header(404)
     assert_match /HTTP\/0.9 404 Not Found/, header
+    assert_match /text\/html/, header
   end
   
   def test_exception_header
     header = @request.create_header(500)
     assert_match /HTTP\/0.9 500 Internal Server Error/, header
+    assert_match /text\/html/, header
   end
   
   def test_time_servlet
