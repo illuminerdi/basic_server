@@ -16,6 +16,35 @@ class TestBasicServer < Test::Unit::TestCase
     assert_equal "GET", @request.method
   end
   
+  def test_ok_header
+    header = @request.create_header(200)
+    assert_match /HTTP\/0.9 200 OK/, header
+  end
+  
+  def test_not_found_header
+    header = @request.create_header(404)
+    assert_match /HTTP\/0.9 404 Not Found/, header
+  end
+  
+  def test_exception_header
+    header = @request.create_header(500)
+    assert_match /HTTP\/0.9 500 Internal Server Error/, header
+  end
+  
+  def test_time_servlet
+    assert_match /Current server time/, @request.time
+  end
+  
+  def test_error_servlet
+    assert_raise Exception do
+      @request.error
+    end
+  end
+  
+  def test_quotes_servlet
+    assert_match /-Oscar Wilde/, @request.random_quote
+  end
+  
   def test_html_response_http_code
     response = @request.respond
     assert_equal "HTTP/0.9 200 OK", get_status(response)
@@ -35,19 +64,20 @@ class TestBasicServer < Test::Unit::TestCase
     assert_match /<html>/, response.last
   end
   
-  def test_time_servlet
+  def test_time_servlet_response
     response = @time.respond
     assert_equal "HTTP/0.9 200 OK", get_status(response)
     assert_match /Current server time is:/, response.last
   end
   
-  def test_quotes_servlet
+  def test_quotes_servlet_response
     response = @quotes.respond
     assert_equal "HTTP/0.9 200 OK", get_status(response)
     assert_match /-Oscar Wilde/, response.last
   end
   
-  def test_error_servlet
+  def test_error_servlet_response
+    # we're passing the exception back through to the calling module method, which will handle the http 500
     assert_raise(Exception) do
       response = @error.respond
     end

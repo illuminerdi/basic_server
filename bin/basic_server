@@ -7,6 +7,10 @@ stype = ARGV.shift || 'gserver'
 
 case stype
   when 'gserver' then
+    trap("INT") {
+      puts "Shutting down the server"
+      exit
+    }
     bgs = BasicGServer.new(8080)
     bgs.audit = true
     bgs.start

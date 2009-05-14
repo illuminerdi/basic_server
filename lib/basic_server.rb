@@ -108,12 +108,10 @@ end
 
 class BasicTCPServer
   include BasicServer
-  
   def initialize(port, num_threads=10)
     @port = port
     @num_threads = num_threads
   end
-  
   def start
     server = TCPServer.new(@port)
     threads = ThreadGroup.new
