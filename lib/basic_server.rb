@@ -16,7 +16,7 @@ module BasicServer
   HTTP_VERSION = "HTTP/0.9"
   FILE_404 = "public_html/404.html"
   FILE_500 = "public_html/500.html"
-  
+
   class Request
     attr_reader :method, :path
 
@@ -25,7 +25,7 @@ module BasicServer
       path = "/index.htm" if path.match(/^\/$/)
       @path = Pathname.new("public_html#{path}")
     end
-    
+
     def create_header rnum
       type = case @path.extname
         when /^(\.htm|\.html|\.erb)/ then 'text/html'
@@ -38,9 +38,9 @@ module BasicServer
         header += "Last-Modified: #{@path.mtime}\r\n"
         header += "Content-Length: #{@path.size}\r\n"
       end
-      header += "Content-Type: #{type}\r\n\r\n" 
+      header += "Content-Type: #{type}\r\n\r\n"
     end
-    
+
     def respond
       response = []
       template = @path.split.last.to_s
@@ -50,13 +50,13 @@ module BasicServer
         response << self.send(template)
         return response
       end
-      
+
       unless @path.exist? && @path.file?
         response << create_header(404)
         response << Pathname.new(FILE_404).read
         return response
       end
-      
+
       response << create_header(200)
       case @path.extname
       when '.erb'
@@ -65,15 +65,15 @@ module BasicServer
         response << @path.read
       end
     end
-    
+
     def time
       "Current server time is: #{Time.now.to_s}"
     end
-    
+
     def error
       raise Exception, "You should be seeing an error."
     end
-    
+
     def random_quote
       quotes = [
         "A little sincerity is a dangerous thing, and a great deal of it is absolutely fatal. -Oscar Wilde",
@@ -86,7 +86,7 @@ module BasicServer
       quotes[quote]
     end
   end
-  
+
   def respond io
     begin
       request = Request.new(io.gets)
@@ -120,6 +120,7 @@ class BasicTCPServer
     server = TCPServer.new(@port)
     threads = ThreadGroup.new
     while session = server.accept
+      # Aaron said he thinks this is okay.
       if threads.list.size <= @num_threads
         t = Thread.new(session) do |my_session|
           respond(my_session)
