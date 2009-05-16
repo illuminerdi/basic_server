@@ -7,7 +7,7 @@ require 'erb'
 require 'thread'
 
 module BasicServer
-  VERSION = '0.0.1'
+  VERSION = '1.0.0'
   RESPONSES = {
     200 => "OK",
     404 => "Not Found",
